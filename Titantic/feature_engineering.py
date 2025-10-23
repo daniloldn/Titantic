@@ -11,6 +11,10 @@ def family_size(df):
     
     return df
 
+def sex_to_num(df):
+    df['Sex'] = df['Sex'].map( {'female': 1, 'male': 0} ).astype(int)
+    return df
+
 def label_fam(df):
     df["Family Type"] = df["Family Size"]
     df.loc[df["Family Size"] == 1, "Family Type"] = "Single"
@@ -84,15 +88,16 @@ def apply_parse(df, col_array):
     return df
 
 
-def feature_eng(df, col_array = ["Family Name", "Title", "Given Name", "Maiden Name"], agg = False, df2 = None):
+def feature_eng(df, col_array = ["Family Name", "Title", "Given Name", "Maiden Name"], agg = False, df2 = None, df_type = "train"):
     if agg == True:
         df = agg_data(df, df2)
-    df = apply_parse(df, col_array)
-    df = family_size(df)
-    df = label_fam(df)
-    df = label_titles(df)
-    df = age_interval(df)
-    df = fare_interval(df)
-    df = Pclass_sex(df)
-    
+    if df_type == "train":
+        df = apply_parse(df, col_array)
+        df = family_size(df)
+        df = label_fam(df)
+        df = label_titles(df)
+        df = age_interval(df)
+        df = fare_interval(df)
+        df = Pclass_sex(df)
+    df= sex_to_num(df)
     return df
