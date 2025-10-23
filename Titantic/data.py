@@ -38,3 +38,23 @@ def data_frequency(df):
     tt['Frequence'] = vals
     tt['Percent from total'] = np.round(vals / total * 100, 3)
     return np.transpose(tt)
+
+
+def unique_vals(df):
+    total = df.count()
+    tt = pd.DataFrame(total)
+    tt.columns = ['Total']
+    uniques = []
+    for col in df.columns:
+        unique = df[col].nunique()
+        uniques.append(unique)
+    tt['Uniques'] = uniques
+    return np.transpose(tt)
+
+def survival_rate(df, cols = ['Titles', 'Sex', 'Survived'], groups = ['Titles', 'Sex']):
+    df[cols].groupby(groups, as_index=False).mean()
+
+    return df
+
+    
+
