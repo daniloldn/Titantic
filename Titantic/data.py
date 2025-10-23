@@ -52,9 +52,9 @@ def unique_vals(df):
     return np.transpose(tt)
 
 def survival_rate(df, cols = ['Titles', 'Sex', 'Survived'], groups = ['Titles', 'Sex']):
-    df[cols].groupby(groups, as_index=False).mean()
+    return df[cols].groupby(groups, as_index=False).mean()
 
-    return df
+    
 
     
 
